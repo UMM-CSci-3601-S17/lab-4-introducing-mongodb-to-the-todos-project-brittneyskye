@@ -47,9 +47,9 @@ public class TodoController {
     public String listTodos(Map<String, String[]> queryParams) {
         Document filterDoc = new Document();
 
-        if (queryParams.containsKey("status")) {
-            boolean status = Boolean.parseBoolean(queryParams.get("status")[0]);
-            filterDoc = filterDoc.append("status", status);
+        if (queryParams.containsKey("owner")) {
+            String owner = queryParams.get("owner")[0];
+            filterDoc = filterDoc.append("owner", owner);
         }
 
         FindIterable<Document> matchingTodos = todoCollection.find(filterDoc);
