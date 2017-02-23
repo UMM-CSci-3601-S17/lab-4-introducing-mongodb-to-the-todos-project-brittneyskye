@@ -3,6 +3,7 @@ import { TodoListService } from "./todo-list.service";
 import { Todo } from "./todo";
 import { FilterBy } from "./filter.pipe";
 
+
 @Component({
     selector: 'todo-list-component',
     templateUrl: 'todo-list.component.html',
