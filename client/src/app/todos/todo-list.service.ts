@@ -15,4 +15,8 @@ export class TodoListService {
     getTodoById(id: string): Observable<Todo> {
         return this.http.request(this.todoUrl + "/" + id).map(res => res.json());
     }
+
+    getTodosByOwner(owner: string): Observable<Todo> {
+        return this.http.request(this.todoUrl + "?owner=" + owner).map(res => res.json());
+    }
 }

@@ -52,6 +52,11 @@ public class TodoController {
             filterDoc = filterDoc.append("owner", owner);
         }
 
+//        if (queryParams.containsKey("status")){
+//            Boolean status = Boolean.parseBoolean(queryParams.get("status")[0]);
+//            filterDoc = filterDoc.append("status",status);
+//        }
+
         FindIterable<Document> matchingTodos = todoCollection.find(filterDoc);
 
         return JSON.serialize(matchingTodos);

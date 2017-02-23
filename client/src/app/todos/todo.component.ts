@@ -9,14 +9,23 @@ import { Todo } from "./todo";
 export class TodoComponent implements OnInit {
     public todo: Todo = null;
     private id: string;
+    private owner: string;
 
     constructor(private todoListService: TodoListService) {
         // this.todos = this.todoListService.gettodos();
     }
 
-    private subscribeToServiceForId() {
+    private subscribeToService() {
         if (this.id) {
             this.todoListService.getTodoById(this.id).subscribe(
+                todo => this.todo = todo,
+                err => {
+                    console.log(err);
+                }
+            );
+        }
+        if (this.owner) {
+            this.todoListService.getTodosByOwner(this.owner).subscribe(
                 todo => this.todo = todo,
                 err => {
                     console.log(err);
@@ -27,10 +36,15 @@ export class TodoComponent implements OnInit {
 
     setId(id: string) {
         this.id = id;
-        this.subscribeToServiceForId();
+        this.subscribeToService();
+    }
+
+    setOwner(owner: string ) {
+        this.owner = owner;
+        this.subscribeToService();
     }
 
     ngOnInit(): void {
-        this.subscribeToServiceForId();
+        this.subscribeToService()
     }
 }
