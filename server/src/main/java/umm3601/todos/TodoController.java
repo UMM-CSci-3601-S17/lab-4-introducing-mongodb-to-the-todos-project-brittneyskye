@@ -10,16 +10,16 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.util.JSON;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -46,20 +46,25 @@ public class TodoController {
 
     // List todos
     public String listTodos(Map<String, String[]> queryParams) {
-        System.out.println("Listing todos");
-        Document filterDoc = new Document();
+
+        List<Bson> aggregateParams = new ArrayList<>();
 
         if (queryParams.containsKey("owner")) {
             String owner = queryParams.get("owner")[0];
-            filterDoc = filterDoc.append("owner", owner);
+            aggregateParams.add(Aggregates.match(Filters.eq("owner", owner)));
         }
 
-        if (queryParams.containsKey("status")){
-            Boolean status = Boolean.parseBoolean(queryParams.get("status")[0]);
-            filterDoc = filterDoc.append("status",status);
+        if (queryParams.containsKey("status")) {
+            String status = queryParams.get("status")[0];
+            aggregateParams.add(Aggregates.match(Filters.eq("status", Boolean.parseBoolean(status))));
         }
 
-        FindIterable<Document> matchingTodos = todoCollection.find(filterDoc);
+        if (queryParams.containsKey("body")) {
+            String body = queryParams.get("body")[0];
+            aggregateParams.add(Aggregates.match(Filters.regex("body", body)));
+        }
+
+        AggregateIterable<Document> matchingTodos = todoCollection.aggregate(aggregateParams);
 
         return JSON.serialize(matchingTodos);
     }

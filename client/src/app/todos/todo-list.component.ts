@@ -38,12 +38,16 @@ export class TodoListComponent implements OnInit {
         return status;
     }
 
+    public getSelectedBody(): string{
+        return (<HTMLInputElement>document.getElementById("bodyText")).value;
+    }
 
 
     public checkDatabaseFilters(): void{
 
         var owner = this.getSelectedOwner();
         var status = this.getSelectedStatus();
+        var body = this.getSelectedBody();
 
         var filterUrl = "todos?";
 
@@ -51,6 +55,8 @@ export class TodoListComponent implements OnInit {
             filterUrl += "owner=" + owner + "&";
         if(status)
             filterUrl += "status=" + status + "&";
+        if(body)
+            filterUrl += "body=" + body + "&"
 
         console.log("(" + filterUrl + ")");
 
