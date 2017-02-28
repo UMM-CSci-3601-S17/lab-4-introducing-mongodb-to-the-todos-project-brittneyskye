@@ -4,18 +4,9 @@
 
     <li class="list-group-item list-group-item-info">
 
-        <div id="statusRadioButtons" (change)="checkDatabaseFilters()">
-            <input id="statusBoth" type="radio" name="status" value="" checked> Both <br/>
-            <input id="statusIncomplete" type="radio" name="status" value="false" > Incomplete <br/>
-            <input id="statusComplete" type="radio" name="status" value="true" > Complete
-        </div>
 
-        <select id="ownerDropdown" ng-model="selectedOwner" (change)="checkDatabaseFilters()">
-            <option value=""></option>
-            <option *ngFor="let owner of owners" value="{{owner._id}}">{{owner._id}}</option>
-        </select>
-
-        <!--<input #input type="text" placeholder="Filter by Owner" (input)="searchOwner = $event.target.value">-->
+        <span class="badge">Page Loaded</span>
+        <br/>
 
         <input #input type="text" placeholder="Search by ID" (input)="searchID = $event.target.value">
         <input #input type="text" Placeholder="Filter by Category" (input)="searchCategory = $event.target.value">
@@ -25,8 +16,25 @@
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
         </button>
 
+
+
+        <form id="statusRadioButtons" (change)="checkDatabaseFilters()">
+            <br/><span class="label label-primary">Filter Status: </span>
+            <input id="statusBoth" type="radio" name="status" value="" checked> Both
+            <input id="statusIncomplete" type="radio" name="status" value="false" > Incomplete
+            <input id="statusComplete" type="radio" name="status" value="true" > Complete
+        </form>
+
+        <select id="ownerDropdown" ng-model="selectedOwner" (change)="checkDatabaseFilters()">
+            <option value="">Select Owner</option>
+            <option *ngFor="let owner of owners" value="{{owner._id}}">{{owner._id}}</option>
+        </select>
+
     </li>
-    <li class="list-group-item list-group-item-info">Todos</li>
+    <li class="list-group-item list-group-item-info">
+        <span class="label label-success">Todos</span> <br/>
+
+    </li>
     <li *ngFor="let todo of todos | filterBy: {category: searchCategory} | filterBy: {_id: searchID}" class="list-group-item">
         {{"Owner: " + todo.owner}} <br>
         {{"ID: " +  todo._id}} <br>
@@ -35,3 +43,4 @@
         {{"Body: " + todo.body}}
     </li>
 </ul>
+
