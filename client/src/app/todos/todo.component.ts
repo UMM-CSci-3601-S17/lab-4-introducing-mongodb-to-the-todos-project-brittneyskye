@@ -24,14 +24,7 @@ export class TodoComponent implements OnInit {
                 }
             );
         }
-        if (this.owner) {
-            this.todoListService.getTodosByOwner(this.owner).subscribe(
-                todo => this.todo = todo,
-                err => {
-                    console.log(err);
-                }
-            );
-        }
+
     }
 
     setId(id: string) {

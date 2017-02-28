@@ -18,7 +18,53 @@ export class TodoListComponent implements OnInit {
         // this.todos = this.todoListService.getTodos();
     }
 
+    public getSelectedOwner(): string{
+        return (<HTMLInputElement>document.getElementById("ownerDropdown")).value;
+    }
+
+    public getSelectedStatus(): string{
+
+        var status;
+
+        if((<HTMLInputElement>document.getElementById("statusBoth")).checked)
+            status = (<HTMLInputElement>document.getElementById("statusBoth")).value
+
+        else if((<HTMLInputElement>document.getElementById("statusComplete")).checked)
+            status = (<HTMLInputElement>document.getElementById("statusComplete")).value
+
+        else if((<HTMLInputElement>document.getElementById("statusIncomplete")).checked)
+            status = (<HTMLInputElement>document.getElementById("statusIncomplete")).value
+
+        return status;
+    }
+
+
+
+    public checkDatabaseFilters(): void{
+
+        var owner = this.getSelectedOwner();
+        var status = this.getSelectedStatus();
+
+        var filterUrl = "todos?";
+
+        if(owner)
+            filterUrl += "owner=" + owner + "&";
+        if(status)
+            filterUrl += "status=" + status + "&";
+
+        console.log("(" + filterUrl + ")");
+
+        this.todoListService.getTodosByFilter(filterUrl).subscribe(
+            todos => this.todos = todos,
+            err => {
+                console.log(err);
+            }
+        );
+
+    }
+
     ngOnInit(): void {
+
         this.todoListService.getTodos().subscribe(
             todos => this.todos = todos,
             err => {

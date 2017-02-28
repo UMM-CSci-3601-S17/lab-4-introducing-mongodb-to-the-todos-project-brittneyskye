@@ -3,11 +3,13 @@
 <ul class="list-group">
     <li class="list-group-item list-group-item-info">
 
-        <input type="radio" name="status" value="" checked> Both <br/>
-        <input type="radio" name="status" value="false" > Incomplete <br/>
-        <input type="radio" name="status" value="true" > Complete
+        <div id="statusRadioButtons" (change)="checkDatabaseFilters()">
+            <input id="statusBoth" type="radio" name="status" value="" checked> Both <br/>
+            <input id="statusIncomplete" type="radio" name="status" value="false" > Incomplete <br/>
+            <input id="statusComplete" type="radio" name="status" value="true" > Complete
+        </div>
 
-        <select ng-model="selectedOwner">
+        <select id="ownerDropdown" ng-model="selectedOwner" (change)="checkDatabaseFilters()">
             <option value=""></option>
             <option *ngFor="let owner of owners" value="{{owner._id}}">{{owner._id}}</option>
         </select>
@@ -17,6 +19,7 @@
         <input #input type="text" placeholder="Search by ID" (input)="searchID = $event.target.value">
         <input #input type="text" Placeholder="Filter by Category" (input)="searchCategory = $event.target.value">
         <input #input type="text" Placeholder="Search Body" (input)="searchBody = $event.target.value">
+        <button (click)="checkDatabaseFilters()">Filter Body</button>
 
     </li>
     <li class="list-group-item list-group-item-info">Todos</li>
