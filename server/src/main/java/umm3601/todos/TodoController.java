@@ -78,12 +78,11 @@ public class TodoController {
     }
 
     public String getTodoOwners(){
-        System.out.println("Listing todo owners");
         AggregateIterable<Document> documents
                 = todoCollection.aggregate(
                 Arrays.asList(
-                        Aggregates.group("$owner")
-                                //Accumulators.addToSet("allOwners", "$owner"))
+                        Aggregates.group("$owner"),
+                        Aggregates.sort(Sorts.ascending("_id"))
                 ));
         System.err.println(JSON.serialize(documents));
         return JSON.serialize(documents);
