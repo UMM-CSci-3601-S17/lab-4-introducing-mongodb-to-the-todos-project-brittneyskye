@@ -6,7 +6,9 @@ import { Observable } from "rxjs";
 @Injectable()
 export class TodoListService {
     private todoUrl: string = API_URL + "todos";
-    constructor(private http:Http) { }
+
+    constructor(private http: Http) {
+    }
 
     getTodos(): Observable<Todo[]> {
         return this.http.request(this.todoUrl).map(res => res.json());
@@ -19,4 +21,9 @@ export class TodoListService {
     getTodosByOwner(owner: string): Observable<Todo> {
         return this.http.request(this.todoUrl + "?owner=" + owner).map(res => res.json());
     }
+
+    getTodoOwners(): Observable<Todo[]> {
+        return this.http.request(API_URL + "/todoOwners").map(res => res.json());
+    }
+
 }

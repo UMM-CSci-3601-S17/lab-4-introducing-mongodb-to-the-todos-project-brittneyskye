@@ -41,10 +41,12 @@ public class TodoController {
         MongoDatabase db = mongoClient.getDatabase("test");
 
         todoCollection = db.getCollection("todos");
+
     }
 
     // List todos
     public String listTodos(Map<String, String[]> queryParams) {
+        System.out.println("Listing todos");
         Document filterDoc = new Document();
 
         if (queryParams.containsKey("owner")) {
@@ -75,8 +77,16 @@ public class TodoController {
         return user.toJson();
     }
 
-    public String getAllOwners() {
-        return allOwners;
+    public String getTodoOwners(){
+        System.out.println("Listing todo owners");
+        AggregateIterable<Document> documents
+                = todoCollection.aggregate(
+                Arrays.asList(
+                        Aggregates.group("$owner")
+                                //Accumulators.addToSet("allOwners", "$owner"))
+                ));
+        System.err.println(JSON.serialize(documents));
+        return JSON.serialize(documents);
     }
 
 }

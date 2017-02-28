@@ -70,8 +70,9 @@ public class Server {
             return userController.getAverageAgeByCompany();
         });
 
-        get("api/allTodoOwners", (req, res) -> {
-
+        get("api/todoOwners", (req, res) -> {
+            res.type("application/json");
+            return todoController.getTodoOwners();
         });
 
         // Handle "404" file not found requests:
