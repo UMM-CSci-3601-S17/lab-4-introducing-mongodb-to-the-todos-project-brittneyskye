@@ -1,6 +1,7 @@
 <!--copied from Brittney Lab3-->
 
 <ul class="list-group">
+
     <li class="list-group-item list-group-item-info">
 
         <div id="statusRadioButtons" (change)="checkDatabaseFilters()">
@@ -19,7 +20,10 @@
         <input #input type="text" placeholder="Search by ID" (input)="searchID = $event.target.value">
         <input #input type="text" Placeholder="Filter by Category" (input)="searchCategory = $event.target.value">
         <input #input id="bodyText" type="text" Placeholder="Search Body" (input)="searchBody = $event.target.value">
-        <button (click)="checkDatabaseFilters()">Filter Body</button>
+
+        <button (click)="checkDatabaseFilters()" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
 
     </li>
     <li class="list-group-item list-group-item-info">Todos</li>
